@@ -41,7 +41,7 @@ def make_spectrogram(audio_path):
         ax=ax
     )
 
-    ax.set_title("Mel Spectrogram")
+    ax.set_title("Спектрограма Мела")
     fig.colorbar(img, ax=ax, format="%+2.0f dB")
     plt.tight_layout()
 
@@ -72,9 +72,11 @@ demo = gr.Interface(
         gr.Textbox(label="Клас звуку"),
         gr.Plot(label="Спектрограма")
     ],
-    title="Sounds Classifier",
+    title="Класифікатор звуків",
     description="Класифікація аудіозаписів та побудова Mel-спектрограми.",
-    submit_btn="Classify"
+    submit_btn="Класифікувати",
+    clear_btn="Очистити",
+    flagging_mode="never"
 )
 
 demo.launch()
