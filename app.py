@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 MAX_DURATION = 12
 
 model = joblib.load("project/model.pkl")
-scaler = joblib.load('scaler.pkl')
+scaler = joblib.load('project/scaler.pkl')
 
 def extract_features(audio_path):
     y, sr = librosa.load(audio_path, sr=None, duration=MAX_DURATION)
