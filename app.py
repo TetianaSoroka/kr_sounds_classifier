@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 MAX_DURATION = 12
 
 model = joblib.load("project/model.pkl")
-
+scaler = joblib.load('scaler.pkl')
 
 def extract_features(audio_path):
     y, sr = librosa.load(audio_path, sr=None, duration=MAX_DURATION)
@@ -53,9 +53,11 @@ def predict_audio(audio_file):
 
     features = extract_features(audio_path)
 
-    prediction = model.predict(
-        features.reshape(1, -1)
-    )[0]
+    features_2d = np.array(features).reshape(1, -1)
+    
+    scaled_features = scaler.transform(features_2d)
+
+    prediction = model.predict(scaled_features)
 
     spectrogram = make_spectrogram(audio_path)
 
