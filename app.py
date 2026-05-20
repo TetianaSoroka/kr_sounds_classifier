@@ -57,16 +57,17 @@ def predict_audio(audio_file):
     
     scaled_features = scaler.transform(features_2d)
 
-    prediction = model.predict(scaled_features)
+    prediction = model.predict(scaled_features)[0]
     
     probabilities = model.predict_proba(scaled_features)[0] 
     max_idx = np.argmax(probabilities)
     
     confidence = probabilities[max_idx] * 100 
+    confidence_str = f"{confidence:.1f}%"
 
     spectrogram = make_spectrogram(audio_path)
 
-    return str(prediction), spectrogram, str(confidence)
+    return str(prediction), spectrogram, str(confidence_str)
 
 
 demo = gr.Interface(
