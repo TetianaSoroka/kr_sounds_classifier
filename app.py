@@ -58,10 +58,15 @@ def predict_audio(audio_file):
     scaled_features = scaler.transform(features_2d)
 
     prediction = model.predict(scaled_features)
+    
+    probabilities = model.predict_proba(scaled_features)[0] 
+    max_idx = np.argmax(probabilities)
+    
+    confidence = probabilities[max_idx] * 100 
 
     spectrogram = make_spectrogram(audio_path)
 
-    return str(prediction), spectrogram
+    return str(prediction), spectrogram, str(confidence)
 
 
 demo = gr.Interface(
@@ -72,7 +77,8 @@ demo = gr.Interface(
     ),
     outputs=[
         gr.Textbox(label="Клас звуку"),
-        gr.Plot(label="Спектрограма")
+        gr.Plot(label="Спектрограма"),
+        gr.Textbox(label="Впевненість моделі")
     ],
     title="Класифікатор звуків",
     description="Класифікація аудіозаписів та побудова Mel-спектрограми.",
